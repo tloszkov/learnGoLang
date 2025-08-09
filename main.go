@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	loadenv "learnGoLang/LoadEnv"
+	sendnotification "learnGoLang/NotificationTelegram"
 	"log"
 	"os"
 	"time"
@@ -13,5 +15,7 @@ func main() {
 	log.Println("Symbol:", loadenv.SYMBOL)
 	log.SetOutput(os.Stdout)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
-	log.Println("Started date:", time.Now().String())
+	log.Println("Started date:", time.Now().Format("2006-01-02 15:04:05"))
+	message := fmt.Sprintf("Ro Bot service started! Symbol:%s | Time:%s", loadenv.SYMBOL, time.Now().Format("2006-01-02 15:04:05"))
+	sendnotification.SendTelegramNotification(message)
 }
