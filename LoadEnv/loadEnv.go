@@ -49,7 +49,7 @@ var (
 // Optional: Telegram notification variables
 var (
 	TELEGRAM_BOT_TOKEN string
-	TELEGRAM_CHAT_ID   int64 // Changed to int64 for chat ID
+	TELEGRAM_CHAT_ID   int64
 )
 
 // LoadEnv loads environment variables from a .env file and assigns them to global variables.
@@ -122,9 +122,18 @@ func LoadEnv() {
 	}
 
 	// Telegram Notification (Optional)
-	TELEGRAM_BOT_TOKEN = os.Getenv("TELEGRAM_BOT_TOKEN")
-	if os.Getenv("TELEGRAM_CHAT_ID") != "" {
-		TELEGRAM_CHAT_ID = mustParseInt64("TELEGRAM_CHAT_ID")
+	telegramChatIDStr := os.Getenv("TELEGRAM_CHAT_ID")
+	if telegramChatIDStr != "" {
+		var err error
+		TELEGRAM_CHAT_ID, err = strconv.ParseInt(telegramChatIDStr, 10, 64)
+		if err != nil {
+			log.Fatalf("Invalid value for TELEGRAM_CHAT_ID in .env: %v", err)
+		}
+	}
+
+	telegramBotToken := os.Getenv("TELEGRAM_BOT_TOKEN")
+	if telegramBotToken != "" {
+		TELEGRAM_BOT_TOKEN = telegramBotToken
 	}
 }
 
