@@ -112,7 +112,7 @@ func LoadEnv() {
 	}
 	DATA_FILE_PATH = os.Getenv("DATA_FILE_PATH")
 	if DATA_FILE_PATH == "" {
-		DATA_FILE_PATH = "ETHUSDT_15m.csv" // Default if not set
+		DATA_FILE_PATH = "data/ETHUSDC_15m.csv" // Default if not set
 	}
 	var parseErr error
 	StartDate, parseErr = time.Parse("2006-01-02 15:04:05", START_DATE_STR)
